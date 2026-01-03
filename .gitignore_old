@@ -1,0 +1,296 @@
+# ============================================================
+# .gitignore - ESI Triage Assistant v4.0
+# Optimisé pour déploiement Streamlit Cloud
+# ============================================================
+
+# ================== PYTHON ==================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyo
+.Python
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ================== ENVIRONNEMENTS ==================
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+esi_training/
+.conda/
+
+# ================== IDE / EDITORS ==================
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+notebooks/
+
+# ================== OS ==================
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# ================== MLOPS ==================
+# MLflow
+mlruns/
+mlflow_artifacts/
+mlartifacts/
+
+# MinIO
+minio_data/
+
+# Tensorboard
+events.out.tfevents.*
+tensorboard_logs/
+
+# ================== MODÈLES & CHECKPOINTS ==================
+# ⚠️ CRITIQUE pour Streamlit Cloud (limité à 1GB)
+
+# Ignorer TOUS les checkpoints intermédiaires
+checkpoint-*/
+
+# Ignorer les résultats d'entraînement volumineux
+clinicalbert_esi_results/
+training_output/
+runs/
+
+# Fichiers de modèles volumineux
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.h5
+*.pkl
+*.pickle
+
+# ⚠️ EXCEPTION: Garder UNIQUEMENT le meilleur modèle final
+# Le modèle DOIT être dans model/ pour l'application
+!model/
+!model/**/*.safetensors
+!model/**/*.json
+!model/**/*.txt
+!model/**/*.bin
+
+# Mais ignorer les fichiers optimizer/scheduler volumineux
+model/**/optimizer.pt
+model/**/scheduler.pt
+model/**/rng_state.pth
+model/**/training_args.bin
+
+# ================== DATA ==================
+# ⚠️ Données médicales sensibles (MIMIC-IV) - NE PAS COMMITER
+data/mimic-iv-ed-2.2/
+data/mimic-iv/
+data/physionet.org/
+data/splits/
+
+# Ignorer tous les CSV volumineux
+*.csv
+*.tsv
+*.jsonl
+
+# ⚠️ EXCEPTION: Garder les datasets essentiels (petits)
+!data/custom_training_data.csv
+!data/esi_data.csv
+
+# Audio (fichiers volumineux)
+*.wav
+*.mp3
+*.ogg
+*.m4a
+*.flac
+data/audio_samples/
+
+# ⚠️ EXCEPTION: Fichiers de test audio (petits)
+!test_audio.wav
+!data/audio_samples/.gitkeep
+
+# Fichiers temporaires
+*.npy
+*.npz
+
+# JSON (ignorer sauf configs)
+*.json
+!package.json
+!patient_history.json
+!model/**/*.json
+!src/**/*.json
+
+# ================== STREAMLIT CLOUD ==================
+# Secrets (NE JAMAIS COMMITER)
+.streamlit/secrets.toml
+
+# Configuration locale (optionnel - peut être commitée)
+# .streamlit/config.toml
+
+# Cache Streamlit
+.streamlit/cache/
+
+# ================== TRADUCTION & CACHE ==================
+# Cache de traduction (sera régénéré automatiquement)
+translation_cache/
+.translation_cache/
+
+# Modèles Whisper téléchargés (sera téléchargé au démarrage)
+whisper_models/
+.cache/whisper/
+
+# ================== LOGS ==================
+logs/
+*.log
+overfitting_analysis/
+
+# ================== ARCHIVES & BACKUP ==================
+archives/
+archive/
+backup/
+old_data/
+
+# Résultats d'évaluation
+confusion_matrix.png
+classification_report.csv
+evaluation_results/
+
+# ================== TEMPORAIRES ==================
+*.tmp
+*.temp
+*.cache
+temp/
+tmp/
+nul
+
+# Fichiers système temporaires
+0.20.1
+1.2.2
+
+# ================== FICHIERS GÉNÉRÉS ==================
+# HTML/PDF générés automatiquement
+*.html
+!index.html
+!documentation/**/*.html
+
+GUIDE_TECHNOLOGIES_files/
+HISTORIQUE_DEVELOPPEMENT_COMPLET_files/
+
+# PDF générés (garder uniquement documentation)
+*.pdf
+!Cahier*.pdf
+!documentation/**/*.pdf
+
+# Rapports PDF exports (générés par l'app)
+Rapport_Triage_ESI_*.pdf
+
+# ================== TESTS ==================
+test_*.py
+*_test.py
+.pytest_cache/
+.cache/
+.coverage
+htmlcov/
+.tox/
+
+# ⚠️ EXCEPTION: Tests utiles
+!test_whisper.py
+
+# ================== SECRETS & CONFIGURATION ==================
+# Variables d'environnement
+.env
+.env.*
+.env.local
+.env.*.local
+
+# Clés API
+*.key
+*.secret
+DEEPL_API_KEY
+OPENAI_API_KEY
+credentials.json
+*.pem
+
+# Configuration locale sensible
+config.local.py
+secrets.py
+
+# ================== AUTRES ==================
+# Fichiers système
+*.swp
+*.swo
+*~
+.directory
+
+# Notes personnelles
+TODO.txt
+NOTES.md
+todo.md
+ideas.txt
+TASKS.md
+
+# ================== FICHIERS REQUIS (NE PAS IGNORER) ==================
+# Ces fichiers DOIVENT être committés pour Streamlit Cloud
+
+# Application principale
+!app.py
+!train.py
+!preprocessing.py
+
+# Dépendances
+!requirements.txt
+!packages.txt
+
+# Documentation
+!README.md
+!QUICKSTART.md
+!TRANSLATION_GUIDE.md
+!LICENSE
+!CHANGELOG.md
+
+# Scripts
+!run_app.bat
+!train.bat
+
+# Source code
+!src/
+!src/**/*.py
+
+# Configuration Streamlit (publique)
+!.streamlit/
+!.streamlit/config.toml
+# .streamlit/secrets.toml est DÉJÀ IGNORÉ ci-dessus
+
+# ================== GIT LFS (Large File Storage) ==================
+# Si vous utilisez Git LFS pour les gros fichiers (modèle)
+.gitattributes
