@@ -1,2 +1,5 @@
 ffmpeg
 libsndfile1
+cmake
+pkg-config
+build-essential
