@@ -18,8 +18,9 @@ try:
     from audio_recorder_streamlit import audio_recorder
     from audio_processor import AudioProcessor
     AUDIO_OK = True
-except:
+except Exception as e:
     AUDIO_OK = False
+    print(f"⚠️ Audio features disabled: {str(e)}")
 
 try:
     from ner_extractor import MedicalNER
@@ -31,9 +32,10 @@ try:
     from smart_translator import SmartTranslator, auto_translate
     MODULES_OK = True
     TRANSLATOR_OK = True
-except:
+except Exception as e:
     MODULES_OK = False
     TRANSLATOR_OK = False
+    print(f"⚠️ Advanced modules disabled: {str(e)}")
 
 try:
     from reportlab.lib.pagesizes import A4
@@ -44,8 +46,9 @@ try:
     from reportlab.pdfbase import pdfmetrics
     from reportlab.pdfbase.ttfonts import TTFont
     PDF_OK = True
-except:
+except Exception as e:
     PDF_OK = False
+    print(f"⚠️ PDF generation disabled: {str(e)}")
 
 # Configuration
 st.set_page_config(
@@ -1079,6 +1082,19 @@ def main():
     except Exception as e:
         st.error(f"❌ Erreur: {e}")
         st.stop()
+
+    # Display feature status (diagnostic)
+    with st.expander("🔧 Status des fonctionnalités", expanded=False):
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            status_pdf = "✅ Activée" if PDF_OK else "❌ Désactivée"
+            st.write(f"**PDF Export:** {status_pdf}")
+        with col2:
+            status_audio = "✅ Activée" if AUDIO_OK else "❌ Désactivée"
+            st.write(f"**Audio/Whisper:** {status_audio}")
+        with col3:
+            status_modules = "✅ Activés" if MODULES_OK else "❌ Désactivés"
+            st.write(f"**Modules avancés:** {status_modules}")
 
     # KPIs en haut - 4 colonnes
     kpi1, kpi2, kpi3, kpi4 = st.columns(4)
