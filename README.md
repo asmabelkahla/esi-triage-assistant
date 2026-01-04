@@ -73,7 +73,7 @@ medical_triage_assistant/
 
 ```bash
 # Cloner le projet
-git clone https://github.com/asmabelkahla/medical_triage_assistant.git
+git clone https://github.com/asmabelkahla/esi-triage-assistant.git
 cd medical_triage_assistant
 
 # Créer environnement
